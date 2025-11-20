@@ -1,4 +1,4 @@
-name: GitHub Events to Discord Webhook (Fancy)
+name: GitHub Events to Discord Webhook
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
   discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Send beautiful embed to Discord
+      - name: Send Discord embed
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           EVENT: ${{ github.event_name }}
