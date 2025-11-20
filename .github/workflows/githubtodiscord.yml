@@ -18,8 +18,8 @@ jobs:
      - name: Run Node script
        run: |
          echo "Sending message to Discord..."
-                    MESSAGE="GitHub event triggered: ${{ github.event_name }}"
-                    curl -H "Content-Type: application/json" \
-                      -X POST \
-                      -d "{"content": "${MESSAGE}"}" \
-                      "${{ secrets.DISCORD_WEBHOOK_URL }}"
+         MESSAGE="GitHub event triggered: ${{ github.event_name }}"
+         curl -H "Content-Type: application/json" \
+           -X POST \
+           -d "{\"content\": \"${MESSAGE}\"}" \
+           "${{ secrets.DISCORD_WEBHOOK_URL }}"
