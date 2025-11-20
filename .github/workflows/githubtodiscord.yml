@@ -1,43 +1,21 @@
-name: GitHub Events to Discord Webhook (Fancy)
+run: |
+  URL=""
+  TITLE="GitHub Event: $EVENT"
 
-on:
-  issues:
-    types: [opened, edited, closed, reopened]
-  issue_comment:
-    types: [created]
-  pull_request:
-    types: [opened, reopened, edited, closed, synchronize]
-  push:
+  # Determine URL
+  if [ "$EVENT" = "pull_request" ]; then
+    URL="${{ github.event.pull_request.html_url }}"
+  elif [ "$EVENT" = "issues" ]; then
+    URL="${{ github.event.issue.html_url }}"
+  elif [ "$EVENT" = "push" ]; then
+    URL="${{ github.event.compare }}"
+  elif [ "$EVENT" = "issue_comment" ]; then
+    URL="${{ github.event.issue.html_url }}"
+  fi
 
-jobs:
-  discord:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send beautiful embed to Discord
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          EVENT: ${{ github.event_name }}
-          ACTOR: ${{ github.actor }}
-          REPO: ${{ github.repository }}
-          GITHUB_REF: ${{ github.ref }}
-        run: |
-          URL=""
-          TITLE="GitHub Event: $EVENT"
+  COLOR=1127128
 
-          # Determine URL based on event type
-          if [ "$EVENT" = "pull_request" ]; then
-            URL="${{ github.event.pull_request.html_url }}"
-          elif [ "$EVENT" = "issues" ]; then
-            URL="${{ github.event.issue.html_url }}"
-          elif [ "$EVENT" = "push" ]; then
-            URL="${{ github.event.compare }}"
-          elif [ "$EVENT" = "issue_comment" ]; then
-            URL="${{ github.event.issue.html_url }}"
-          fi
-
-          COLOR=1127128
-
-          EMBED=$(cat <<EOF
+  EMBED=$(cat <<EOF
   {
     "embeds": [
       {
