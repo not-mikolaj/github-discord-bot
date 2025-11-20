@@ -1,59 +1,65 @@
-name: GitHub to Discord Bot
+name: GitHub Events to Discord Webhook (Fancy)
 
 on:
-  push:
-  pull_request:
-    types: [opened, edited, closed, reopened, synchronize]
   issues:
     types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created]
+  pull_request:
+    types: [opened, reopened, edited, closed, synchronize]
+  push:
 
 jobs:
-  notify:
+  discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Discord message
+      - name: Send beautiful embed to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          REPO: ${{ github.repository }}
           EVENT: ${{ github.event_name }}
           ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
         run: |
-          MESSAGE=""
+          URL=""
+          TITLE="GitHub Event: $EVENT"
 
-          if [ "$EVENT" = "issues" ]; then
-            ISSUE_NUMBER="${{ github.event.issue.number }}"
-            ISSUE_TITLE="${{ github.event.issue.title }}"
-            ACTION="${{ github.event.action }}"
-            ISSUE_URL="${{ github.event.issue.html_url }}"
-            MESSAGE="📘 Issue [#${ISSUE_NUMBER}](${ISSUE_URL}) '${ISSUE_TITLE}' was **${ACTION}** by ${ACTOR} in ${REPO}"
-
-          elif [ "$EVENT" = "pull_request" ]; then
-            PR_NUMBER="${{ github.event.pull_request.number }}"
-            PR_TITLE="${{ github.event.pull_request.title }}"
-            ACTION="${{ github.event.action }}"
-            PR_URL="${{ github.event.pull_request.html_url }}"
-            MESSAGE="🔀 PR [#${PR_NUMBER}](${PR_URL}) '${PR_TITLE}' was **${ACTION}** by ${ACTOR} in ${REPO}"
-
-          elif [ "$EVENT" = "issue_comment" ]; then
-            COMMENT_BODY="${{ github.event.comment.body }}"
-            ISSUE_NUMBER="${{ github.event.issue.number }}"
-            ISSUE_URL="${{ github.event.issue.html_url }}"
-            MESSAGE="💬 New comment on [#${ISSUE_NUMBER}](${ISSUE_URL}) by ${ACTOR}: '${COMMENT_BODY}'"
-
+          # Determine URL based on event type
+          if [ "$EVENT" = "pull_request" ]; then
+            URL="${{ github.event.pull_request.html_url }}"
+          elif [ "$EVENT" = "issues" ]; then
+            URL="${{ github.event.issue.html_url }}"
           elif [ "$EVENT" = "push" ]; then
-            BRANCH="${{ github.ref_name }}"
-            # Count commits using jq
-            COMMIT_COUNT=$(echo '${{ toJson(github.event.commits) }}' | jq '. | length')
-            MESSAGE="📝 ${ACTOR} pushed ${COMMIT_COUNT} commit(s) to branch ${BRANCH} in ${REPO}"
-
-          else
-            MESSAGE="🔔 Event ${EVENT} triggered by ${ACTOR} in ${REPO}"
+            URL="${{ github.event.compare }}"
+          elif [ "$EVENT" = "issue_comment" ]; then
+            URL="${{ github.event.issue.html_url }}"
           fi
 
-          # Send message to Discord
-          curl -H "Content-Type: application/json" \
-               -X POST \
-               -d "{\"content\": \"${MESSAGE}\"}" \
-               "$DISCORD_WEBHOOK_URL"
+          COLOR=1127128
+
+          EMBED=$(cat <<EOF
+  {
+    "embeds": [
+      {
+        "title": "${TITLE}",
+        "description": "Repository: ${REPO}\nAction: ${EVENT}\nPerformed by: ${ACTOR}",
+        "color": ${COLOR},
+        "url": "${URL}",
+        "footer": {
+          "text": "GitHub → Discord Automation",
+          "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        },
+        "thumbnail": {
+          "url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        },
+        "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+      }
+    ]
+  }
+  EOF
+  )
+
+curl -H "Content-Type: application/json" \
+  -X POST \
+  -d "${EMBED}" \
+  "$DISCORD_WEBHOOK_URL"
