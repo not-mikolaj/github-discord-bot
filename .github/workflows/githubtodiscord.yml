@@ -1,0 +1,64 @@
+name: GitHub Events to Discord Webhook
+
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, edited, closed, synchronize]
+  issues:
+    types: [opened, edited, closed, reopened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord embed
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          EVENT: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
+        run: |
+          URL=""
+          TITLE="GitHub Event: $EVENT"
+
+          if [ "$EVENT" = "pull_request" ]; then
+            URL="${{ github.event.pull_request.html_url }}"
+          elif [ "$EVENT" = "issues" ]; then
+            URL="${{ github.event.issue.html_url }}"
+          elif [ "$EVENT" = "push" ]; then
+            URL="${{ github.event.compare }}"
+          elif [ "$EVENT" = "issue_comment" ]; then
+            URL="${{ github.event.issue.html_url }}"
+          fi
+
+          COLOR=1127128
+
+          EMBED=$(cat <<EOF
+  {
+    "embeds": [
+      {
+        "title": "${TITLE}",
+        "description": "Repository: ${REPO}\nAction: ${EVENT}\nPerformed by: ${ACTOR}",
+        "color": ${COLOR},
+        "url": "${URL}",
+        "footer": {
+          "text": "GitHub → Discord Automation",
+          "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        },
+        "thumbnail": {
+          "url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        },
+        "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+      }
+    ]
+  }
+  EOF
+  )
+
+curl -H "Content-Type: application/json" \
+  -X POST \
+  -d "${EMBED}" \
+  "$DISCORD_WEBHOOK_URL"
