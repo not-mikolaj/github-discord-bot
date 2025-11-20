@@ -6,6 +6,7 @@ on:
     types: [created]
   pull_request:
     types: [opened, edited, closed, reopened]
+  push:
 jobs:
   run-script:
     runs-on: ubuntu-latest
