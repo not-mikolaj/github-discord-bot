@@ -1,26 +1,31 @@
-name: Github PR Bot
+name: GitHub to Discord Bot
+
 on:
+  push:
+  pull_request:
+    types: [opened, edited, closed, reopened, synchronize]
   issues:
     types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created]
-  pull_request:
-    types: [opened, edited, closed, reopened, synchronize]
-  push:
 
 jobs:
-  run-script:
+  notify:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Node script
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Send message to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          echo "Sending message to Discord..."
-          MESSAGE="GitHub event triggered: ${{ github.event_name }} by ${{ github.actor }}"
-          curl -H "Content-Type: application/json" \
-            -X POST \
-            -d "{\"content\": \"${MESSAGE}\"}" \
-            "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          node app.js "${{ github.event_name }}" "${{ github.actor }}"

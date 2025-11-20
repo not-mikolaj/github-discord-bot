@@ -1,15 +1,12 @@
-const fs = require('fs');
-const axios = require("axios");
+    const axios = require("axios");
 
-const eventPath = process.env.GITHUB_EVENT_PATH;
-const event = JSON.parse(fs.readFileSync(eventPath, 'utf8'));
+const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
-async function sendToDiscord(message) {
-    await axios.post(process.env.DISCORD_WEBHOOK_URL, {
-        content: message
-    });
-}
+const eventName = process.argv[2] || "unknown event";
+const actor = process.argv[3] || "unknown user";
 
-(async () => {
-    await sendToDiscord(`Event: ${process.env.GITHUB_EVENT_NAME}`);
-})();
+const message = `🔔 GitHub event: **${eventName}** triggered by **${actor}**`;
+
+axios.post(webhookUrl, { content: message })
+    .then(() => console.log("Message sent to Discord"))
+    .catch((err) => console.error("Error:", err.response ? err.response.data : err.message));
