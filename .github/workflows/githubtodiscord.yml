@@ -1,0 +1,21 @@
+name: Github PR Bot
+on:
+  issues:
+    types: [opened, edited, closed, reopened]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, edited, closed, reopened]
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Checkout repo
+       uses: actions/checkout@v4
+
+
+     - name: Run Node script
+       run: |
+        echo "Running script..."
+        node scripts/app.js
