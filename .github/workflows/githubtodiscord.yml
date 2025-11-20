@@ -12,20 +12,21 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Send message to Discord
+      - name: Send Discord message
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          node app.js "${{ github.event_name }}" "${{ github.actor }}"
+          # Determine event name and actor
+          EVENT_NAME="${{ github.event_name }}"
+          ACTOR="${{ github.actor }}"
+
+          # Prepare message
+          MESSAGE="🔔 GitHub event: ${EVENT_NAME} triggered by ${ACTOR}"
+
+          # Send to Discord
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"content\": \"${MESSAGE}\"}" \
+               "$DISCORD_WEBHOOK_URL"
