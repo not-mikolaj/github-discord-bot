@@ -1,0 +1,198 @@
+Skip to main content
+English
+Preferences
+Contact Us
+Feedback
+AWS Documentation
+
+Get started
+Service guides
+Developer tools
+AI resources
+
+Return to the Console
+
+AWS Toolkit for JetBrains
+User Guide
+AWS Toolkit for JetBrains
+Amazon Q Developer and Amazon CodeWhisperer
+Download the Toolkit
+
+Getting started
+
+Authentication and access
+
+Working with AWS services
+
+User interface reference
+Troubleshooting
+
+Security
+Document history
+Documentation
+AWS Toolkit for JetBrains
+User Guide
+Documentation
+AWS Toolkit for JetBrains
+User Guide
+AWS Toolkit for JetBrains
+ PDF
+ RSS
+Focus mode
+The AWS Toolkit for JetBrains is an open source plugin for the integrated development environments (IDEs) from JetBrains. The toolkit makes it easier for you to develop, debug, and deploy serverless applications with Amazon Web Services (AWS) by making your AWS resources available from your JetBrains IDE.
+
+Topics
+What the AWS Toolkit for JetBrains includes
+
+Working with the AWS Toolkit for JetBrains
+
+Related information
+
+What the AWS Toolkit for JetBrains includes
+
+AWS Toolkit for JetBrains includes the following specific toolkits:
+
+AWS Toolkit for CLion (for C & C++ development)
+
+AWS Toolkit for GoLand (for Go development)
+
+AWS Toolkit for IntelliJ (for Java development)
+
+AWS Toolkit for WebStorm (for Node.js development)
+
+AWS Toolkit for Rider (for .NET development)
+
+AWS Toolkit for PhpStorm  (for PHP development)
+
+AWS Toolkit for PyCharm (for Python development)
+
+AWS Toolkit for RubyMine (for Ruby development)
+
+AWS Toolkit for DataGrip (for database management)
+
+Note
+When there are meaningful differences in functionality between the AWS Toolkits for the supported JetBrains IDEs, we note them in this guide.
+
+You can also use the AWS Toolkit for JetBrains to work with AWS Lambda functions, AWS CloudFormation stacks, and Amazon Elastic Container Service (Amazon ECS) clusters. The AWS Toolkit for JetBrains includes features such as AWS credentials management and AWS Region management, which simplify writing applications for AWS.
+
+Working with the AWS Toolkit for JetBrains
+
+You can use the AWS Toolkit for JetBrains to do the following:
+
+Create, deploy, update, and delete AWS Serverless Application Model (AWS SAM) applications. For more information on working with AWS SAM through the AWS Toolkit for JetBrains, see the AWS Serverless topic located in this User Guide.
+
+Remotely and locally create, update, run, and debug AWS Lambda functions. To learn more about working with the AWS Lambda service through the AWS Toolkit for JetBrains, see the AWS Lambda topic located in this User Guide.
+
+View event logs for, and delete AWS CloudFormation stacks. For additional information on working with CloudFormation and the AWS Toolkit for JetBrains, see the AWS CloudFormation topic in this User Guide.
+
+Debug code in AWS clusters using Amazon Elastic Container Service. For more information on working with Amazon ECS with the AWS Toolkit for JetBrains, see the Amazon Elastic Container Service topic in this User Guide.
+
+Work with Amazon EventBridge schemas, to learn more see the Amazon EventBridge Scheduler topic in this User Guide.
+
+Related information
+
+Related videos
+Announcement | Introducing the AWS Toolkit for IntelliJ IDEA (16 minutes, April 2019, YouTube website)
+
+Getting Started with the AWS Toolkit for JetBrains (covers the AWS Toolkit for PyCharm only, 2 minutes, November 2018, YouTube website)
+
+Building Serverless Applications with the AWS Toolkit for JetBrains (covers the AWS Toolkit for PyCharm only, 6 minutes, November 2018, YouTube website)
+
+Related webpages
+The AWS Toolkit for IntelliJ is Now Generally Available (March 2019, blog post, AWS website)
+
+AWS Toolkit for IntelliJ – Now generally available (March 2019, blog post, AWS website)
+
+New – AWS Toolkits for PyCharm, IntelliJ (Preview) (November 2018, blog post, AWS website)
+
+Introducing the AWS Toolkit for PyCharm (November 2018, blog post, AWS website)
+
+AWS Toolkit for IntelliJ (part of the AWS Toolkit for JetBrains, AWS website)
+
+AWS Toolkit for PyCharm (part of the AWS Toolkit for JetBrains, AWS website)
+
+AWS Toolkit (JetBrains website)
+
+Develop on AWS with JetBrains Tools (JetBrains website)
+
+All Developer Tools and Products by JetBrains (JetBrains website)
+
+Questions and help
+To ask questions or seek help from the AWS developer community, see the following AWS Discussion Forums:
+
+C & C++ Development
+
+Go Development
+
+Java Development
+
+JavaScript Development
+
+.NET Development
+
+PHP Development
+
+Python Development
+
+Ruby Development
+
+(When you enter these forums, AWS might require you to sign in.)
+
+You can also contact us directly.
+
+Report a bug with the AWS Toolkit or make a feature request
+To report a bug with the AWS Toolkit for JetBrains or to make a feature request, go to the Issues tab in the aws/aws-toolkit-jetbrains repository on the GitHub website. Choose New issue, and then follow the on-screen instructions to finish making your bug report or feature request. (When you enter this website, GitHub might require you to sign in.)
+
+Contribute to the AWS Toolkit
+We greatly value your contributions to the AWS Toolkit. To begin contributing, read the Contributing Guidelines in the aws/aws-toolkit-jetbrains repository on the GitHub website. (When you enter this website, GitHub might require you to sign in.)
+
+Discover highly rated pages Abstracts generated by AI
+
+1
+
+Toolkit-for-jetbrains › userguide
+Installing the AWS Toolkit for JetBrains
+Install AWS Toolkit for JetBrains IDE from Marketplace. Requires AWS Core plugin. Search, install, and accept privacy notice to set up.
+April 30, 2024
+
+On this page
+What the AWS Toolkit for JetBrains includes
+Working with the AWS Toolkit for JetBrains
+Related information
+Recommended tasks
+How to
+
+Connect the AWS Toolkit for JetBrains to your AWS account
+Install and set up the AWS Toolkit for JetBrains
+Download and set up the AWS Toolkit for JetBrains
+Learn about
+
+Understand the AWS Toolkit for Visual Studio Code
+Did this page help you?
+Yes
+No
+Provide feedback
+
+Next topic:Amazon Q Developer and Amazon CodeWhisperer
+Get Started
+AWS Hands-On Tutorials
+AWS Solutions Library
+AWS Decision Guides
+Service Guides
+Choosing a generative AI service
+AWS service guides
+AWS CLI Tutorials on GitHub
+Developer Tools
+AWS Code Example Library
+AWS CLI
+AWS Builder Center
+AWS Developer Tools Blog
+Helpful Links
+Download the AWS Docs MCP
+Sign into the AWS Console
+AWS re:Post
+PrivacySite termsCookie preferences © 2025, Amazon Web Services, Inc. or its affiliates. All rights reserved.
+
+English
+
+Top
